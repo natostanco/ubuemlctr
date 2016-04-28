@@ -5,7 +5,7 @@ script:
 - git clone -b v2 https://github.com/tomav/docker-mailserver && cd ./docker-mailserver
 - patch target/start-mailserver.sh ../start-mailserver.sh.patch
 - docker build -t ${cnt} .
-- "../docker-slim build \
+- "sudo ../docker-slim build \
  --include-path /var/spool/postfix \
   --include-path /etc/init.d \
   --include-path /usr/lib/amavis \
