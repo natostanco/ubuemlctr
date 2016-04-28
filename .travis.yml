@@ -6,7 +6,8 @@ script:
 - patch target/start-mailserver.sh ../start-mailserver.sh.patch
 - docker build -t ${cnt} .
 - "sudo ../docker-slim build \
- --include-path /var/spool/postfix \
+  --mount ${SAVE}./config:/tmp/docker-mailserver \
+  --include-path /var/spool/postfix \
   --include-path /etc/init.d \
   --include-path /usr/lib/amavis \
   --include-path /usr/lib/dovecot \
