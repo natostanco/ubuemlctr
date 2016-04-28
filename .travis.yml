@@ -33,7 +33,7 @@ script:
   --include-path /etc/mtab \
   --http-probe \
   --entrypoint /usr/local/bin/start-mailserver.sh \
-  --continue-after 30 \
+  --continue-after probe \
   ${cnt}"
 before_deploy:
 - cd
