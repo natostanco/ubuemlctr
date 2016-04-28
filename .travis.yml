@@ -17,7 +17,7 @@ script:
   --include-path /usr/share/dovecot \
   --include-path /usr/lib/perl5/Net/DNS/RR/TXT.pm \
   --include-path /usr/share/perl/5.18.2/Text/ParseWords.pm \
-  --include-path /usr/lib/perl5/auto/Crypt/OpenSSL/RSA/new_public_key.pm \
+  --include-path /usr/lib/perl5/auto/Crypt/OpenSSL/RSA/new_public_key.al \
   --include-path /usr/bin/tail \
   --include-path /usr/local/bin \
   --include-path /usr/bin/cut \
