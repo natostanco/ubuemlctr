@@ -1,0 +1,37 @@
+services:
+- docker
+script:
+- export SAVE=$PWD cnt="ubuemlctr"
+- git clone -b v2 https://github.com/tomav/docker-mailserver && cd ./docker-mailserver
+- docker build -t ${cnt} .
+- "../docker-slim build \\ --include-path /var/spool/postfix \\ --include-path /etc/init.d
+  \\ --include-path /usr/lib/amavis \\ --include-path /usr/lib/dovecot \\ --include-path
+  /var/log \\ --include-path /usr/bin/doveadm \\ --include-path /usr/bin/doveconf
+  \\ --include-path /usr/bin/maildirmake.dovecot \\ --include-path /usr/share/dovecot
+  \\ --include-path /usr/lib/perl5/Net/DNS/RR/TXT.pm \\ --include-path /usr/share/perl/5.18.2/Text/ParseWords.pm
+  \\ --include-path /usr/lib/perl5/auto/Crypt/OpenSSL/RSA/new_public_key.pm \\ --include-path
+  /usr/bin/tail \\ --include-path /usr/local/bin \\ --include-path /usr/bin/cut \\
+  --include-path /bin/mv \\ --include-path /bin/ls \\ --include-path /bin/cp \\ --include-path
+  /bin/chmod \\ --include-path /usr/bin/sort \\ --include-path /usr/bin/uniq \\ --include-path
+  /lib/x86_64-linux-gnu/libacl.so.1 \\ --include-path /lib/x86_64-linux-gnu/libattr.so.1
+  \\ --include-path /etc/mtab \\ --http-probe \\ --entrypoint /usr/local/bin/start-mailserver.sh
+  \\ --continue-after 30 \\ ${cnt}"
+before_deploy:
+- cd
+- wget `curl -s https://api.github.com/repos/appc/docker2aci/releases | grep browser_download_url
+  | head -n 1 | cut -d '"' -f 4` -O d2a.tar.gz
+- tar -zxf d2a.tar.gz && rm d2a.tar.gz && d2a=`ls | grep "docker2aci*"` && d2a=`basename  $d2a`
+  && alias d2a='${PWD}/${d2a}/docker2aci'
+- docker save -o ${cnt}.slim.tar ${cnt}.slim
+- "${PWD}/${d2a}/docker2aci ${cnt}.slim.tar"
+- xz -9 -c ${cnt}.slim.tar > ${cnt}.slim.tar.xz
+deploy:
+  provider: releases
+  api_key:
+    secure: nvnxzncEpPfQ5YGYkt9pW2qV5E/53DhSg8nM4nelTv9SrV6daqyihRNYywdSHFGoW4IBkJpoJhmfRBjJn8gotCYUu28c9BD4OkRdjxc+X31j8HCbILNj4du12WuvGRMmZrUlyS9NeaRCqlnwkjRPPjGeIO0lxhb1F76aCV38H7bgmK7TD1t4SVf8ddRAqyJX3QDgfuh1Sj/6seuDH2n2Fhwc1NgXedFQN/OR/Xu8eDe7GM0qoxDHZYVSkCi7ESmWAfz9JuVXM9Md+G8DkTtXDoIyxe23AWhgTJJExb0RUEbGQ6UEm2IT+AHLGHfhYlUnUs7Bb2r8zoi8UkRaboGaic6fEVt7AE6K4iiBEUAg0F8fhfptC+P1RK9VbD6MzUzaBGcyU8P7OzL+cVpRpSwKb2dE29kIWZXU2S3H7gxk7N1KRW45rK/Lt6uWXWa9XMxmhwzkvkMRBsOjPH23d6Xa8XQ2gHltyMIO3+Q2hQgvRHSmdSFcxoafy8bHF32n5hk713WEO7XUerG/L+CxW2silFIxbqO0lx/iAhGR4GraS0VT4B6GDcg1UUGtCD/1WmGV+mdJgpKZNiObWGG2Ffr004vHQ8fZrOL+FgSx6nfSNI0jIPCfr1DeKPDaSxgWKiL2TpwcmbfXbhbu0g73EGRJEFWmjZpj25X0RxJ4FHyjyJA=
+  file:
+  - ${cnt}.slim.tar.xz 
+  - ${cnt}.slim-latest.aci 
+  skip_cleanup: true
+  on:
+    tags: true

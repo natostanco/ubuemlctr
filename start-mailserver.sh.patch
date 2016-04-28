@@ -1,0 +1,8 @@
+7a8,14
+> hostname $HOSTNAME
+> IP=`ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'`
+> echo $IP $DOMAIN $HOSTNAME >> /etc/hosts
+> echo domain $DOMAIN >> /etc/resolv.conf
+> chown clamav:clamav /var/log/mail/clamav.log
+> find /var/run -name "*.pid" | xargs rm
+> 
