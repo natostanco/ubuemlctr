@@ -3,7 +3,9 @@ services:
 script:
 - export SAVE=$PWD cnt="ubuemlctr"
 - git clone -b v2 https://github.com/tomav/docker-mailserver && cd ./docker-mailserver
+- patch target/start-mailserver.sh ../start-mailserver.sh.patch
 - docker build -t ${cnt} .
+<<<<<<< HEAD
 - "${SAVE}/docker-slim build --include-path /var/spool/postfix \
 --include-path /etc/init.d \
 --include-path /usr/lib/amavis \
@@ -32,6 +34,37 @@ script:
 --entrypoint /usr/local/bin/start-mailserver.sh \
 --continue-after 30 \
 ${cnt}"
+=======
+- "sudo ../docker-slim build \
+ --include-path /var/spool/postfix \
+  --include-path /etc/init.d \
+  --include-path /usr/lib/amavis \
+  --include-path /usr/lib/dovecot \
+  --include-path /var/log \
+  --include-path /usr/bin/doveadm \
+  --include-path /usr/bin/doveconf \
+  --include-path /usr/bin/maildirmake.dovecot \
+  --include-path /usr/share/dovecot \
+  --include-path /usr/lib/perl5/Net/DNS/RR/TXT.pm \
+  --include-path /usr/share/perl/5.18.2/Text/ParseWords.pm \
+  --include-path /usr/lib/perl5/auto/Crypt/OpenSSL/RSA/new_public_key.pm \
+  --include-path /usr/bin/tail \
+  --include-path /usr/local/bin \
+  --include-path /usr/bin/cut \
+  --include-path /bin/mv \
+  --include-path /bin/ls \
+  --include-path /bin/cp \
+  --include-path /bin/chmod \
+  --include-path /usr/bin/sort \
+  --include-path /usr/bin/uniq \
+  --include-path /lib/x86_64-linux-gnu/libacl.so.1 \
+  --include-path /lib/x86_64-linux-gnu/libattr.so.1 \
+  --include-path /etc/mtab \
+  --http-probe \
+  --entrypoint /usr/local/bin/start-mailserver.sh \
+  --continue-after 30 \
+  ${cnt}"
+>>>>>>> 8f81f17b3d06909ecdaffb3d8cc248fe193d42a8
 before_deploy:
 - cd
 - wget `curl -s https://api.github.com/repos/appc/docker2aci/releases | grep browser_download_url
