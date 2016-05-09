@@ -1,7 +1,7 @@
 services:
 - docker
 script:
-- export SAVE=$PWD cnt="ubuemlctr"
+- export SAVE=$PWD cnt="ubuemlctr" slim=".slim"
 - git clone -b v2 https://github.com/tomav/docker-mailserver && cd ./docker-mailserver
 - patch target/start-mailserver.sh ../start-mailserver.sh.patch
 - docker build -t ${cnt} .
@@ -25,6 +25,9 @@ before_deploy:
 - docker save -o ${cnt}.slim.tar ${cnt}.slim
 - "${PWD}/${d2a}/docker2aci ${cnt}.slim.tar"
 - xz -9 -c ${cnt}.slim.tar > ${cnt}.slim.tar.xz
+- docker login -e $QUAYE -u $QUAYL -p $QUAYP  quay.io
+- docker tag ${cnt}${slim} quay.io/natostanco/$cnt:$TRAVIS_TAG
+- docker push quay.io/natostanco/$cnt:$TRAVIS_TAG
 deploy:
   provider: releases
   api_key:
