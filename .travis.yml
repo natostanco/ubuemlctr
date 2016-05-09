@@ -5,23 +5,11 @@ script:
 - git clone https://github.com/tomav/docker-mailserver && cd ./docker-mailserver
 - patch target/start-mailserver.sh ../start-mailserver.sh.patch
 - docker build -t ${cnt} .
-- sudo ../docker-slim build --mount ${SAVE}/config:/tmp/docker-mailserver --include-path
-  /var/spool/postfix --include-path /etc/init.d --include-path /usr/lib/amavis --include-path
-  /usr/lib/dovecot --include-path /var/log --include-path /usr/bin/doveadm --include-path
-  /usr/bin/doveconf --include-path /usr/bin/maildirmake.dovecot --include-path /usr/share/dovecot
-  --include-path /usr/lib/perl5/Net/DNS/RR/TXT.pm --include-path /usr/share/perl/5.18.2/Text/ParseWords.pm
-  --include-path /usr/lib/perl5/auto/Crypt/OpenSSL/RSA/new_public_key.al --include-path
-  /usr/bin/tail --include-path /usr/local/bin --include-path /usr/bin/cut --include-path
-  /bin/mv --include-path /bin/ls --include-path /bin/cp --include-path /bin/chmod
-  --include-path /usr/bin/sort --include-path /usr/bin/uniq --include-path /lib/x86_64-linux-gnu/libacl.so.1
-  --include-path /lib/x86_64-linux-gnu/libattr.so.1 --include-path /etc/mtab --http-probe
-  --entrypoint /usr/local/bin/start-mailserver.sh --continue-after probe ${cnt}
+- sudo ../docker-slim build --mount ${SAVE}/config:/tmp/docker-mailserver --include-path /var/spool/postfix --include-path /etc/init.d --include-path /usr/lib/amavis --include-path /usr/lib/dovecot --include-path /var/log --include-path /usr/bin/doveadm --include-path /usr/bin/doveconf --include-path /usr/bin/maildirmake.dovecot --include-path /usr/share/dovecot --include-path /usr/lib/perl5/Net/DNS/RR/TXT.pm --include-path /usr/share/perl/5.18.2/Text/ParseWords.pm --include-path /usr/lib/perl5/auto/Crypt/OpenSSL/RSA/new_public_key.al --include-path /usr/bin/tail --include-path /usr/local/bin --include-path /usr/bin/cut --include-path /bin/mv --include-path /bin/ls --include-path /bin/cp --include-path /bin/chmod --include-path /usr/bin/sort --include-path /usr/bin/uniq --include-path /lib/x86_64-linux-gnu/libacl.so.1 --include-path /lib/x86_64-linux-gnu/libattr.so.1 --include-path /etc/mtab --http-probe --entrypoint /usr/local/bin/start-mailserver.sh --continue-after probe ${cnt} 
 before_deploy:
 - cd
-- wget `curl -s https://api.github.com/repos/appc/docker2aci/releases | grep browser_download_url
-  | head -n 1 | cut -d '"' -f 4` -O d2a.tar.gz
-- tar -zxf d2a.tar.gz && rm d2a.tar.gz && d2a=`ls | grep "docker2aci*"` && d2a=`basename  $d2a`
-  && alias d2a='${PWD}/${d2a}/docker2aci'
+- wget `curl -s https://api.github.com/repos/appc/docker2aci/releases | grep browser_download_url | head -n 1 | cut -d '"' -f 4` -O d2a.tar.gz
+- tar -zxf d2a.tar.gz && rm d2a.tar.gz && d2a=`ls | grep "docker2aci*"` && d2a=`basename  $d2a` && alias d2a='${PWD}/${d2a}/docker2aci'
 - docker save -o ${cnt}.slim.tar ${cnt}.slim
 - "${PWD}/${d2a}/docker2aci ${cnt}.slim.tar"
 - xz -9 -c ${cnt}.slim.tar > ${cnt}.slim.tar.xz
