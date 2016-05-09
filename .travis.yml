@@ -5,36 +5,17 @@ script:
 - git clone -b v2 https://github.com/tomav/docker-mailserver && cd ./docker-mailserver
 - patch target/start-mailserver.sh ../start-mailserver.sh.patch
 - docker build -t ${cnt} .
-- "sudo ../docker-slim build \
-  --mount ${SAVE}/config:/tmp/docker-mailserver \
-  --include-path /var/spool/postfix \
-  --include-path /etc/init.d \
-  --include-path /usr/lib/amavis \
-  --include-path /usr/lib/dovecot \
-  --include-path /var/log \
-  --include-path /usr/bin/doveadm \
-  --include-path /usr/bin/doveconf \
-  --include-path /usr/bin/maildirmake.dovecot \
-  --include-path /usr/share/dovecot \
-  --include-path /usr/lib/perl5/Net/DNS/RR/TXT.pm \
-  --include-path /usr/share/perl/5.18.2/Text/ParseWords.pm \
-  --include-path /usr/lib/perl5/auto/Crypt/OpenSSL/RSA/new_public_key.al \
-  --include-path /usr/bin/tail \
-  --include-path /usr/local/bin \
-  --include-path /usr/bin/cut \
-  --include-path /bin/mv \
-  --include-path /bin/ls \
-  --include-path /bin/cp \
-  --include-path /bin/chmod \
-  --include-path /usr/bin/sort \
-  --include-path /usr/bin/uniq \
-  --include-path /lib/x86_64-linux-gnu/libacl.so.1 \
-  --include-path /lib/x86_64-linux-gnu/libattr.so.1 \
-  --include-path /etc/mtab \
-  --http-probe \
-  --entrypoint /usr/local/bin/start-mailserver.sh \
-  --continue-after probe \
-  ${cnt}"
+- sudo ../docker-slim build --mount ${SAVE}/config:/tmp/docker-mailserver --include-path
+  /var/spool/postfix --include-path /etc/init.d --include-path /usr/lib/amavis --include-path
+  /usr/lib/dovecot --include-path /var/log --include-path /usr/bin/doveadm --include-path
+  /usr/bin/doveconf --include-path /usr/bin/maildirmake.dovecot --include-path /usr/share/dovecot
+  --include-path /usr/lib/perl5/Net/DNS/RR/TXT.pm --include-path /usr/share/perl/5.18.2/Text/ParseWords.pm
+  --include-path /usr/lib/perl5/auto/Crypt/OpenSSL/RSA/new_public_key.al --include-path
+  /usr/bin/tail --include-path /usr/local/bin --include-path /usr/bin/cut --include-path
+  /bin/mv --include-path /bin/ls --include-path /bin/cp --include-path /bin/chmod
+  --include-path /usr/bin/sort --include-path /usr/bin/uniq --include-path /lib/x86_64-linux-gnu/libacl.so.1
+  --include-path /lib/x86_64-linux-gnu/libattr.so.1 --include-path /etc/mtab --http-probe
+  --entrypoint /usr/local/bin/start-mailserver.sh --continue-after probe ${cnt}
 before_deploy:
 - cd
 - wget `curl -s https://api.github.com/repos/appc/docker2aci/releases | grep browser_download_url
@@ -49,8 +30,13 @@ deploy:
   api_key:
     secure: nvnxzncEpPfQ5YGYkt9pW2qV5E/53DhSg8nM4nelTv9SrV6daqyihRNYywdSHFGoW4IBkJpoJhmfRBjJn8gotCYUu28c9BD4OkRdjxc+X31j8HCbILNj4du12WuvGRMmZrUlyS9NeaRCqlnwkjRPPjGeIO0lxhb1F76aCV38H7bgmK7TD1t4SVf8ddRAqyJX3QDgfuh1Sj/6seuDH2n2Fhwc1NgXedFQN/OR/Xu8eDe7GM0qoxDHZYVSkCi7ESmWAfz9JuVXM9Md+G8DkTtXDoIyxe23AWhgTJJExb0RUEbGQ6UEm2IT+AHLGHfhYlUnUs7Bb2r8zoi8UkRaboGaic6fEVt7AE6K4iiBEUAg0F8fhfptC+P1RK9VbD6MzUzaBGcyU8P7OzL+cVpRpSwKb2dE29kIWZXU2S3H7gxk7N1KRW45rK/Lt6uWXWa9XMxmhwzkvkMRBsOjPH23d6Xa8XQ2gHltyMIO3+Q2hQgvRHSmdSFcxoafy8bHF32n5hk713WEO7XUerG/L+CxW2silFIxbqO0lx/iAhGR4GraS0VT4B6GDcg1UUGtCD/1WmGV+mdJgpKZNiObWGG2Ffr004vHQ8fZrOL+FgSx6nfSNI0jIPCfr1DeKPDaSxgWKiL2TpwcmbfXbhbu0g73EGRJEFWmjZpj25X0RxJ4FHyjyJA=
   file:
-  - ${cnt}.slim.tar.xz 
-  - ${cnt}.slim-latest.aci 
+  - "${cnt}.slim.tar.xz"
+  - "${cnt}.slim-latest.aci"
   skip_cleanup: true
   on:
     tags: true
+env:
+  global:
+  - secure: kEd41ReMF5w/V/wk/s/s7w35zDfO/cerKc9h5UkTFjyH5utd0Fhgz724RrznaC1+0Usb207/U7pLAs9Sp3+CUuVbt1hqYvo+6C5POanCfZ+oVpihSlcxBKY6DkHg+hJgygyobXXhs8oy1sT392sSaGly+v1qW8wOUcCEZwmkXw8DYYE3OGR8r+7Hn4survV/WdL+PL1D2l7iC1FRuL34bpTzotJGh9Yt0KJA1NtW6MXcfWDEkvJ4tjehwmg11u1BCEA/7KhOihB63+ux6lMykvVtlfosYEtGDCTOy1jAPISHoKK/BOWu6yBLkv2pi9GlT7RHPGcahgak8Zx1VEkgwIvxRIlJ2ZwRqhG3HJeC/0SUS9dQcl4rwXd6vRK4W3lHz2DmL08AmzYVdnSwJZyAJV2wwKyTWdBF65rnHg6QjEvWL9e5AbQWKi5V0idDlHd51neszZxUdB1kIZwtVjIcUSUbv2tiO1UYNLrB2KFB39L07P0yUM/qbOKkwyfbQtHite4afarx3SxDaA2redkzMROamj63fb1Jez92b91+UP6E3JGMSulc4wmGY1KjNqsV2UL0q8Hto+ziREk+kXQMPzr15asw4tI+tBbJkgxraoKG2WduMHkewtQe7iSW02iPitnNy2Oxj8EV4aHDgZYUdydooYWchngOrJL3yHe1N0Y=
+  - secure: WoxpHOxQGbGOKw+RRfarDRJg4K+VUv31njWVyMOpOW8dmCNv9ddgk9I/kHVTgWTKm10bnKUCD8erbQxE/RPS74/3wczef4/HgxgJ1xRACRDx2XFsNTxkoX3001oXJFPm6JXYRxfNvdwo0dHPUfQc6zu9csR9k6zEGLkJnDSnxwIcgIFTqeMXLFdedqHSfKiB3cB3xAhtYB9RRJN2D+rzQAph+NR9ErAzfxk8NCqTrm7BhI9yFo4db6CEB7qkIgss2ZEyyAx1CfVebJp2r7DfzTCnjhIWE0L2Uio2e3gGVVQEkrteGE2JxppuqGgKlfU7LcE2la6iE1RaT+fg2aTQS4zZAS2hp18xtYUHfB2YtCOoWGjdBviSItN/E4jd3WHUtftuVIsrZ0yX06xHMaZ49FgeICNSni5S+G8g34eDyELeP1oHXutd7r0pgQO4J9+eJROjsWzdSxyd+3zKFTdTAFqddCnvzcY8s47XAm6V0O385A2Qd+4J/VRax5gKvh9F3oEArl+USyM/0GbalfOmTuwEhoiijMVPQYSlms3QR3RiMwqEaC3JCTYqhdJWTET0LxkrZnvC+aj8+jbbuqkMvUqQxvYjhmVVf4ngIC+45uCPfZCmfAr9w4KSkYFa9LgsQpu+cr2qkhNPpUTprB87TuQSpi5gKZKG7B1NdnJkaP8=
+  - secure: bRasYhPXiqyp61WmHggijEIZsD9MQw9t1AoUiasoe945QvckbrUXCe7rFK6GDe2t0CLHJlEUFafu6cRCgsX8LFFln9zIBlUDX9grhchQxRn3WM2BU5Svma7GRPBdc0kGOgGsSryi55IZxgoUTIZaaGVk2xJtJacyl+7lKgfHjmm2qZ2KC4vud3eMTdyx23vCqy1KIyH4fb/zrpQBKGHmgqIywskUW1GCzauRii6YRyyOzScCtoYyofBBikAl9lO6qR7cfoY14fLPaeg9AFrNwtR8ni6cjiUpmH2aPBmmhQ2DigoKk5IG1JAWDuYbIPUW2WBTaq05K/ngYbVbIfD8ZPTZsxInTNJFCr6wz3vhGQt+lgmR2o96qQCwF13/W7iKFNhvFO2gaQoIojMCtxPB+b/UYnsAWoGoLZlpayD5MNBFVf0zVxVj5dkX8hvwxH4k/CuMcKan02KoqoLPpcWPM0evNoZdEGnbnGgdAxrcRmDkcxnFKiKlb7f3zCHATqRGh1C+0uWUDFEqd2XKrD9tvZ3Z4fmJxCsQStg9+6JG2d0+Isl8c6EO+2TOYMpWEPdvxwmdO5zODS1DPXehO0HeaNMDV1+nVsW2Dg7X6xaKFnJNwEwMsu33N/bSA+poUoOu1ujAKrO5g2phXmepfUboUS170x6a4CVyTIahKgWDlmw=
