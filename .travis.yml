@@ -8,6 +8,7 @@ script:
 - > 
   sudo ../docker-slim build 
   --mount ${SAVE}/config:/tmp/docker-mailserver 
+  --mount ${SAVE}/scripts:/scripts
   --include-path /var/spool/postfix 
   --include-path /etc/init.d 
   --include-path /usr/lib/amavis 
@@ -33,7 +34,7 @@ script:
   --include-path /lib/x86_64-linux-gnu/libattr.so.1 
   --include-path /etc/mtab 
   --http-probe 
-  --entrypoint /usr/local/bin/start-mailserver.sh 
+  --entrypoint /scripts/entry.sh 
   --continue-after probe ${cnt} 
   
 before_deploy:
