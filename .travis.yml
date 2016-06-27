@@ -2,11 +2,9 @@ services:
 - docker
 script:
 - export SAVE=$PWD cnt="ubuemlctr" slim=".slim"
-- git clone https://github.com/tomav/docker-mailserver && cd ./docker-mailserver
-- patch target/start-mailserver.sh ../start-mailserver.sh.patch
-- docker build -t ${cnt} .
 - > 
   sudo ../docker-slim build 
+  --remove-file-artifacts
   --mount ${SAVE}/config:/tmp/docker-mailserver 
   --mount ${SAVE}/scripts:/scripts
   --include-path /var/spool/postfix 
@@ -33,9 +31,10 @@ script:
   --include-path /lib/x86_64-linux-gnu/libacl.so.1 
   --include-path /lib/x86_64-linux-gnu/libattr.so.1 
   --include-path /etc/mtab 
+  --include-path /etc/ssl
   --http-probe 
   --entrypoint /scripts/entry.sh
-  --continue-after 30 ${cnt} 
+  --continue-after 60 tvial/docker-mailserver   
   
 before_deploy:
 - cd
