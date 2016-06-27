@@ -3,7 +3,7 @@ include=( "/usr/bin/post*" \
           "/bin/ps" \
           "/usr/sbin/postlog" \
           )
-
+ 
 for n in ${!include[*]}
 do
 find ${include[n]} | xargs -I {} ldd {} | awk '{print $3}' | grep '/' | sort -u | xargs -I {} touch {}
