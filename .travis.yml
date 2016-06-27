@@ -3,7 +3,7 @@ services:
 script:
 - export SAVE=$PWD cnt="ubuemlctr" slim=".slim"
 - > 
-  sudo ../docker-slim build 
+  sudo ./docker-slim build 
   --remove-file-artifacts
   --mount ${SAVE}/config:/tmp/docker-mailserver 
   --mount ${SAVE}/scripts:/scripts
