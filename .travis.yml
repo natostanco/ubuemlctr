@@ -3,6 +3,7 @@ services:
 script:
 - export SAVE=$PWD cnt="ubuemlctr" slim=".slim"
 - > 
+  docker pull tvial/docker-mailserver
   sudo ./docker-slim build 
   --remove-file-artifacts
   --mount ${SAVE}/config:/tmp/docker-mailserver 
