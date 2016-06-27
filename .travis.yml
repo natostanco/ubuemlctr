@@ -34,8 +34,7 @@ script:
   --include-path /lib/x86_64-linux-gnu/libattr.so.1 
   --include-path /etc/mtab 
   --http-probe 
-  --entrypoint sh
-  --cmd /scripts/entry.sh
+  --entrypoint /scripts/entry.sh
   --continue-after probe ${cnt} 
   
 before_deploy:
