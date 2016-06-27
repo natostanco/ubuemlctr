@@ -6,7 +6,7 @@ script:
 - docker pull tvial/docker-mailserver
 - docker tag tvial/docker-mailserver ${cnt}
 - > 
-  sudo ./docker-slim build 
+  ./docker-slim build 
   --remove-file-artifacts
   --mount ${SAVE}/config:/tmp/docker-mailserver 
   --mount ${SAVE}/scripts:/scripts
@@ -39,6 +39,8 @@ script:
   --entrypoint /scripts/entry.sh
   --tag ${cnt}${slim}
   --continue-after 30 ${cnt}
+
+- docker images
   
 before_deploy:
 - cd
