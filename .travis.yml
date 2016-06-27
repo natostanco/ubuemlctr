@@ -15,6 +15,7 @@ install:
   - docker version
 script:
 - export SAVE=$PWD cnt="ubuemlctr" slim=".slim"
+- sudo ./scripts/slimmer.sh $SAVE $cnt $slim "$pkg"
 - docker pull tvial/docker-mailserver
 - docker tag tvial/docker-mailserver ${cnt}
 - > 
