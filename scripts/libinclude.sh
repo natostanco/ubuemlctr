@@ -2,6 +2,7 @@
 include=( "/usr/bin/post*" \
           "/bin/ps" \
           "/usr/sbin/post*" \
+          "/usr/lib/libpostfix*" \
           )
  
 for n in ${!include[*]}
