@@ -53,6 +53,7 @@ script:
   --continue-after 30 ${cnt}
 
 - docker images
+- docker version
   
 before_deploy:
 - cd
