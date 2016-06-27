@@ -37,7 +37,9 @@ script:
   --http-probe 
   --entrypoint /scripts/entry.sh
   --tag ${cnt}${slim}
-  --continue-after 60 ${cnt}
+  --continue-after 30 ${cnt}
+  
+- docker images
   
 before_deploy:
 - cd
