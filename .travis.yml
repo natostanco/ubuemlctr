@@ -26,6 +26,7 @@ script:
   --include-path /etc/init.d 
   --include-path /usr/lib/amavis 
   --include-path /usr/lib/dovecot 
+  --include-path /usr/lib/postfix
   --include-path /var/log 
   --include-path /usr/bin/doveadm 
   --include-path /usr/bin/doveconf 
