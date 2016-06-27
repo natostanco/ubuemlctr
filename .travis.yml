@@ -14,7 +14,7 @@ install:
      -o Dpkg::Options::="--force-confold" --assume-yes install docker-engine
   - docker version
 script:
-- export SAVE=$PWD cnt="ubuemlctr" slim=".slim"
+- export SAVE=$PWD cnt="ubuemlctr" slim=".slim" pkg="postfix dovecot-core dovecot-imapd dovecot-pop3d dovecot-sieve dovecot-managesieved gamin amavisd-new spamassassin razor pyzor libsasl2-modules 	clamav clamav-daemon libnet-dns-perl libmail-spf-perl bzip2 file gzip p7zip unzip arj rsyslog opendkim opendkim-tools opendmarc curl fail2ban ed iptables"
 - sudo ./scripts/slimmer.sh $SAVE $cnt $slim "$pkg"
   
 before_deploy:
