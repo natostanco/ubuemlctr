@@ -35,7 +35,7 @@ script:
   --include-path /etc/mtab 
   --http-probe 
   --entrypoint /scripts/entry.sh
-  --continue-after probe ${cnt} 
+  --continue-after 30 ${cnt} 
   
 before_deploy:
 - cd
