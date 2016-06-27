@@ -36,6 +36,7 @@ script:
   --include-path /etc/ssl
   --http-probe 
   --entrypoint /scripts/entry.sh
+  --tag ${cnt}${slim}
   --continue-after 60 ${cnt}
   
 before_deploy:
