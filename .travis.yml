@@ -3,6 +3,7 @@ services:
 script:
 - export SAVE=$PWD cnt="ubuemlctr" slim=".slim"
 - docker pull tvial/docker-mailserver
+- docker tag tvial/docker-mailserver ${cnt}
 - > 
   sudo ./docker-slim build 
   --remove-file-artifacts
@@ -35,7 +36,7 @@ script:
   --include-path /etc/ssl
   --http-probe 
   --entrypoint /scripts/entry.sh
-  --continue-after 60 tvial/docker-mailserver   
+  --continue-after 60 ${cnt}
   
 before_deploy:
 - cd
