@@ -6,7 +6,7 @@ script:
 - docker pull tvial/docker-mailserver
 - docker tag tvial/docker-mailserver ${cnt}
 - > 
-  ./docker-slim build 
+  sudo ./docker-slim build 
   --remove-file-artifacts
   --mount ${SAVE}/config:/tmp/docker-mailserver 
   --mount ${SAVE}/scripts:/scripts
