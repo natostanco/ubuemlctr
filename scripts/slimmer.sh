@@ -11,7 +11,7 @@ docker pull tvial/docker-mailserver
 
 docker tag tvial/docker-mailserver ${cnt}
 
-#docker run -it --rm -v $SAVE:/host --entrypoint "/bin/bash" $cnt "/host/scripts/lister.sh" "$pkg"
+docker run -it --rm -v $SAVE:/host --entrypoint "/bin/bash" $cnt "/host/scripts/lister.sh" "$pkg"
 
 ./docker-slim build \
 --remove-file-artifacts \
