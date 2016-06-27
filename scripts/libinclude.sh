@@ -1,7 +1,7 @@
 #!/bin/bash
 include=( "/usr/bin/post*" \
           "/bin/ps" \
-          "/usr/sbin/postlog" \
+          "/usr/sbin/post*" \
           )
  
 for n in ${!include[*]}
