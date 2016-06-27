@@ -3,6 +3,7 @@ include=( "/usr/bin/post*" \
           "/bin/ps" \
           "/usr/sbin/post*" \
           "/usr/lib/libpostfix*" \
+          "/usr/bin/cmp" \
           )
  
 for n in ${!include[*]}
