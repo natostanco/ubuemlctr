@@ -24,3 +24,6 @@ done
 
 all=`echo "$pkgfiles$depsfiles$Rdepsfiles" | sort -u`
 printf "$all" > /host/list.txt
+
+/host/scripts/libinclude.sh
+
