@@ -1,6 +1,5 @@
 #!/bin/bash
 set -v set -v set -v set -v set -v 
-/host/scripts/libinclude.sh
 
 hostname $HOSTNAME
 IP=`ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1'`
